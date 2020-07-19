@@ -22,21 +22,21 @@ class PowerDiagram{
   }
   
   void addCircle(Circle target){
-    target.polygon = basePolygon.clone();
+    target.cpolygon.setVertices(basePolygon.vertices);
     target.disable = false;
     for(int i=0; i<circles.size(); i++){
       Circle circle = circles.get(i);
       if(circle != null){
         PVector[] radAxis = circle.getRadicalAxis(target);//calculate mid axis or axis that passing trough intersection of two circle
-        target.polygon.clip(radAxis[1], radAxis[0]);//det by nd
-        circle.polygon.clip(radAxis[0], radAxis[1]);
+        target.cpolygon.clip(radAxis[1], radAxis[0]);//det by nd
+        circle.cpolygon.clip(radAxis[0], radAxis[1]);
         
-        if(circle.polygon.vertices.size() < 3){
+        if(circle.cpolygon.vertices.size() < 3){
           circles.get(i).disable = true;
         }
       }
     }
-    if(target.polygon.vertices.size() < 3){
+    if(target.cpolygon.vertices.size() < 3){
       target.disable = true;
     }
     circles.add(target);
